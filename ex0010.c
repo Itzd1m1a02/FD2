@@ -1,17 +1,13 @@
 /**
- * @file ex0009.c
+ * @file ex0010.c
  * @author Dimitri Maia , Dimitrimaia39@gmail.com
  * @brief 
  * @version 0.1
  * @date 19-03-2023
  * 
  * @copyright Copyright (c) 2023
- * Escreva um procedimento que recebe por parâmetro as 3 notas de um
-aluno e uma letra. Se a letra for A, o procedimento calcula a média
-aritmética das notas do aluno, se for P, a sua média ponderada (pesos: 5, 3
-e 2) e se for S, a soma das notas. O valor calculado também deve ser
-retornado e exibido na função main.
-
+ *Faça uma função que receba a média final de um aluno
+por parâmetro e retorne o seu conceito
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,6 +37,13 @@ float media(int notas[], char tipo_media){
     }//switch
 }//função
 
+char conseito(int media){
+    if(media == 10 && media >= 9) return 'A';
+    else if(media < 9 && media >= 7) return 'B';
+    else if(media < 7 && media >= 5) return 'C';
+    else{return 'D';};
+}
+
 int main(){
     int notas[3];
     char tipo_media;
@@ -49,9 +52,11 @@ int main(){
         scanf("%d", &notas[i]);
         setbuf(stdin, NULL);
     }//for
-    printf("\nDigite o conseito: ");
+    printf("\nDigite o tipo de calculo de media: ");
     scanf("%c", &tipo_media);
     setbuf(stdin, NULL);
     float final = media(notas, tipo_media);
-    printf("\no valor da media final do aluno e: %.2f", final);
+    printf("\no valor da media final do aluno e: %.2f\n", final);
+    char con = conseito(final);
+    printf("\no aluno com media %.2f tem conseito %c\n", final, con);
 }//main
