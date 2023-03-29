@@ -42,13 +42,13 @@ saida.
 #include<string.h>
 
 //struct de cadastros
-typedef struct{
-    char Nome[100];
-    char EstadoCivil[20];
-    char Idade[10];
-    char Sexo[10];
-    char Salario[10];
-}Cadastro;
+
+//bibliotecas
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+//struct de cadastros
 
 //struct de endereco
 typedef struct{
@@ -57,12 +57,21 @@ typedef struct{
     char Estado[50];
 }Endereco;
 
+typedef struct{
+    char Nome[100];
+    char EstadoCivil[20];
+    char Idade[10];
+    char Sexo[10];
+    char Salario[10];
+    Endereco end;
+}Cadastro;
+
 void LeituraDados(){
      //variaveis
     FILE* arq;
     int i = 0;
     Cadastro *cad;
-    Endereco *end;
+
     arq = fopen("funcionarios3.txt", "r");
     if(arq == NULL){
         printf("Erro ao abrir arquivo de entrada!\n");
@@ -80,22 +89,19 @@ void LeituraDados(){
 
     //aloca memoria para as struturas
     cad = (Cadastro*) malloc(num_funci * sizeof(Cadastro));
-    end = (Endereco*) malloc(num_funci * sizeof(Endereco));
 
     while(fgets(aux2, 1000, arq) != NULL){
-        sscanf(aux2, "{ %[^;] ; %[^;] ; %[^;] ; %[^;] ; %[^;] ; %[^;] ; %[^;] ; %[^}] }", cad[i].Nome, end[i].Rua, end[i].Cidade, end[i].Estado, cad[i].Salario, cad[i].EstadoCivil, cad[i].Idade, cad[i].Sexo);
+        sscanf(aux2, "{%[^;] ; {%[^;] ; %[^;] ; %[^}]} ; %[^;] ; %[^;] ; %[^;] ; %[^}]}", cad[i].Nome, cad[i].end.Rua, cad[i].end.Cidade, cad[i].end.Estado, cad[i].Salario, cad[i].EstadoCivil, cad[i].Idade, cad[i].Sexo);
         i++;
     }//while
 
-    i = 0;
-    while(i < num_funci){
-        printf("\nfuncionario[%d]{ nome: %s, endereco: %s, cidade: %s, estado: %s, salario: %s, estado civil: %s, idade: %s, sexo: %s}",i + 1, cad[i].Nome, end[i].Rua, end[i].Cidade, end[i].Estado, cad[i].Salario, cad[i].EstadoCivil, cad[i].Idade, cad[i].Sexo);
-        i++;
-    }//while
-
+    for (i = 0; i < num_funci; i++){
+        printf("\n [%d] Nome: %s, Endereco: %s, Cidade: %s, Estado: %s, Salario: %s, Estado-civil: %s, Idade: %s, Sexo: %s",i + 1, cad[i].Nome, cad[i].end.Rua, cad[i].end.Cidade, cad[i].end.Estado, cad[i].Salario, cad[i].EstadoCivil, cad[i].Idade, cad[i].Sexo);
+    }
+    
+    //fecha o arquivo e libera memoria de alocação dinamica
     fclose(arq);
     free(cad);
-    free(end);
 }
 
 int main(){
