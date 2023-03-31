@@ -19,15 +19,18 @@ dígito (0 ou 1) dado o sucesso da divisão
 #include <stdlib.h>
 
 int binario(int x){
-    if (x == 0) return 0;
-    else if (x == 1) return 1;
-    else return binario(x) % 2; 
+    if (x / 2 != 0) {
+        binario(x / 2);
+    }
+    printf("%d", x % 2);
 }
 
 int main(){
     int num;
-    printf("Digite um numero: ");
+    printf("\nDigite um numero: ");
     scanf("%d", &num);
-    printf("O numero %d em binario e: ",num ,binario(num));
+    printf("\n");
+    binario(num);
+    printf("\n");
     return 0;
-}
+}//main
