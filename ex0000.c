@@ -41,20 +41,13 @@ saida.
 #include<stdlib.h>
 #include<string.h>
 
-//struct de cadastros
-
-//bibliotecas
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-
-//struct de cadastros
 
 //struct de endereco
 typedef struct{
     char Rua[100], Cidade[100], Estado[50];
 }Endereco;
 
+//struct de cadastros
 typedef struct{
     char Nome[100], EstadoCivil[20], Sexo[10];
     int Idade, Salario;
@@ -81,7 +74,7 @@ void LeituraDados(){
     //pega a primeira linha do arquivo
     fgets(aux1, 6, arq);
     int num_funci = atoi(aux1);
-    printf("O numero de funcionarios e: %d\n", num_funci);
+    printf("\nTOTAL DE FUNCIONARIOS: %d\n", num_funci);
 
     //aloca memoria para as struturas
     cad = (Cadastro*) malloc(num_funci * sizeof(Cadastro));
@@ -89,13 +82,13 @@ void LeituraDados(){
     //pega cada linha do arquivo e aloca em variaveis
     while(fgets(aux2, 1000, arq) != NULL){
         //{Persephone Belluci; {Rua Revolutions,12 ; Apucarana; Parana} ; 3200; solteiro; 30; F}
-        sscanf(aux2, "{%[^;]; {%[^;] ; %[^;] ;%[^}]} ; %d; %[^;]; %d; %[^}]}", cad[i].Nome, cad[i].end.Rua, cad[i].end.Cidade, cad[i].end.Estado, &cad[i].Salario, cad[i].EstadoCivil, &cad[i].Idade, cad[i].Sexo);
+        sscanf(aux2, "{%[^;]; {%[^;] ; %[^;]; %[^}]} ; %d; %[^;]; %d; %[^}]}", cad[i].Nome, cad[i].end.Rua, cad[i].end.Cidade, cad[i].end.Estado, &cad[i].Salario, cad[i].EstadoCivil, &cad[i].Idade, cad[i].Sexo);
         i++;
     }//while
 
     //mostra os dados obtidos do arquivo
     for (i = 0; i < num_funci; i++){
-        printf("[%d] Nome: %s, Endereco: %s, Cidade: %s, Estado: %s, Salario: %d, Estado-civil: %s, Idade: %d, Sexo: %s\n",i + 1, cad[i].Nome, cad[i].end.Rua, cad[i].end.Cidade, cad[i].end.Estado, cad[i].Salario, cad[i].EstadoCivil, cad[i].Idade, cad[i].Sexo);
+        printf("\n[%d] Nome: %s, Endereco: %s, Cidade: %s, Estado: %s, Salario: %d, Estado-civil: %s, Idade: %d, Sexo: %s\n",i + 1, cad[i].Nome, cad[i].end.Rua, cad[i].end.Cidade, cad[i].end.Estado, cad[i].Salario, cad[i].EstadoCivil, cad[i].Idade, cad[i].Sexo);
     }//for
     
     //cahamda de função
@@ -106,25 +99,27 @@ void LeituraDados(){
     free(cad);
 }//função
 
-void selectsort(Cadastro* cad, int tamanho){
-    int i, j, min, aux;
-  
-  for (i = 0; i < (tamanho - 1); i++) {
+void selectsort(Cadastro cad[], int tamanho){
+    int i, j, min; 
+    Cadastro aux;
+
+    
+    for (i = 0; i < (tamanho - 1); i++) {
     /* O minimo é o primeiro número não ordenado ainda */
     min = i;
-    for (j = i+1; j < tamanho; j++) {
+      for (j = i+1; j < tamanho; j++) {
       /* Caso tenha algum numero menor ele faz a troca do minimo*/
-      if (cad[j].Salario > cad[min].Salario) { //ordem decrecente
-   min = j;
-      }
-    }
+        if (cad[j].Salario > cad[min].Salario) { //ordem decrecente
+    min = j;
+        }//if
+      }//for
     /* Se o minimo for diferente do primeiro numero não ordenado ele faz a troca para ordena-los*/
-    if (i != min) {
-      aux = cad[i].Salario;
-      cad[i].Salario = cad[min].Salario;
-      cad[min].Salario = aux;
-    }
-  }
+      if (i != min) {
+        aux = cad[i];
+        cad[i] = cad[min];
+        cad[min] = aux;
+      }//if
+    }//for
   /* Imprime o vetor ordenado */
   printf("\n\n---------------lista-de-salarios----------------\n\n");
   for (i = 0; i < tamanho; i++) {
