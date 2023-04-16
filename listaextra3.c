@@ -27,7 +27,7 @@ void triangulo(int x){
         }//for
         printf("\n");
     }//for
-    for (int i = x; i >= 1; i--){
+    for (int i = x - 1; i >= 1; i--){
         for (int j = i; j >= 1; j--){
             printf("*");
         }//for
